@@ -1,0 +1,142 @@
+Vertex 1 x: 0 y: 0
+Vertex 2 x: 3 y: 3
+Vertex 3 x: 5 y: 2
+Vertex 1 x: 0 y: 0
+Vertex 2 x: 0 y: 3
+Vertex 3 x: 3 y: 3
+Vertex 1 x: 0 y: 0
+Vertex 2 x: 5 y: 2
+Vertex 3 x: 6 y: 1
+Vertex 1 x: 0 y: 0
+Vertex 2 x: 6 y: 1
+Vertex 3 x: 20 y: 3
+Vertex 1 x: 0 y: 0
+Vertex 2 x: -21 y: -3
+Vertex 3 x: 0 y: 3
+Vertex 1 x: 3 y: 3
+Vertex 2 x: 0 y: 3
+Vertex 3 x: 7 y: 7
+Vertex 1 x: 3 y: 3
+Vertex 2 x: 7 y: 7
+Vertex 3 x: 5 y: 2
+Vertex 1 x: 0 y: 3
+Vertex 2 x: -21 y: -3
+Vertex 3 x: 7 y: 7
+Vertex 1 x: 5 y: 2
+Vertex 2 x: 7 y: 7
+Vertex 3 x: 6 y: 1
+Vertex 1 x: 6 y: 1
+Vertex 2 x: 7 y: 7
+Vertex 3 x: 20 y: 3
+Vertex 1 x: 0 y: 0
+Vertex 2 x: 0 y: 3
+Vertex 3 x: 3 y: 3
+x: 1.5 y: 1.5
+2.12132
+Vertex 1 x: 0 y: 0
+Vertex 2 x: 3 y: 3
+Vertex 3 x: 5 y: 2
+x: 2.83333 y: 0.166667
+2.83823
+Vertex 1 x: 3 y: 3
+Vertex 2 x: 7 y: 7
+Vertex 3 x: 5 y: 2
+x: 5.16667 y: 4.83333
+2.83823
+Vertex 1 x: 0 y: 0
+Vertex 2 x: 5 y: 2
+Vertex 3 x: 6 y: 1
+x: 3.21429 y: -0.785714
+3.30892
+Vertex 1 x: 5 y: 2
+Vertex 2 x: 7 y: 7
+Vertex 3 x: 6 y: 1
+x: 7.78571 y: 3.78571
+3.30892
+Vertex 1 x: 3 y: 3
+Vertex 2 x: 0 y: 3
+Vertex 3 x: 7 y: 7
+x: 1.5 y: 8.5
+5.70088
+Vertex 1 x: 6 y: 1
+Vertex 2 x: 7 y: 7
+Vertex 3 x: 20 y: 3
+x: 12.8659 y: 2.93902
+7.13441
+Vertex 1 x: 0 y: 0
+Vertex 2 x: -21 y: -3
+Vertex 3 x: 0 y: 3
+x: -10.9286 y: 1.5
+11.031
+Vertex 1 x: 0 y: 3
+Vertex 2 x: -21 y: -3
+Vertex 3 x: 7 y: 7
+x: -27.3571 y: 59
+62.3251
+Vertex 1 x: 0 y: 0
+Vertex 2 x: 6 y: 1
+Vertex 3 x: 20 y: 3
+x: 74.5 y: -428.5
+434.928
+Possible Soujourn: 
+x: 1.5 y: 1.5
+x: 2.83333 y: 0.166667
+x: 5.16667 y: 4.83333
+0
+1
+2
+3
+5
+i : 3  i : 3
+i : 4  i : 4
+i : 5  i : 5
+i : 7  i : 7
+i : 8  i : 8
+i : 9  i : 9
+x: 1.5 y: 1.5
+x: 2.83333 y: 0.166667
+x: 5.16667 y: 4.83333
+x: 6 y: 1
+x: 20 y: 3
+x: -21 y: -3
+i : 0  SL : 0
+i : 1  SL : 0
+i : 2  SL : 0
+i : 3  SL : 1
+i : 4  SL : 3
+i : 5  SL : 2
+i : 6  SL : 4
+i : 7  SL : 5
+Weight : 0.862925 | Points : 0 deadline: 18 1 deadline: 20 2 deadline: 1.08 | x: 1.5 y: 1.5
+Weight : 0.0792493 | Points : 3 deadline: 3.55224 | x: 2.83333 y: 0.166667
+Weight : 0.0625 | Points : 4 deadline: 4 | x: 6 y: 1
+Weight : 0.0451215 | Points : 5 deadline: 4.70769 | x: 5.16667 y: 4.83333
+Weight : 0.0277778 | Points : 6 deadline: 6 | x: 20 y: 3
+Weight : 0.0277778 | Points : 7 deadline: 6 | x: -21 y: -3
+currentTime : 0  timeTakenToReachCurrentSL : 0.53033
+currentTime : 0.53033
+currentTime : 0.53033  timeTakenToReachCurrentSL : 0.471405
+currentTime : 1.00173
+currentTime : 1.00173  timeTakenToReachCurrentSL : 0.81862
+currentTime : 1.82035
+currentTime : 1.82035  timeTakenToReachCurrentSL : 0.980717
+currentTime : 2.80107
+currentTime : 2.80107  timeTakenToReachCurrentSL : 3.73655
+currentTime : 5.05594
+currentTime : 5.05594  timeTakenToReachCurrentSL : 10.3592
+currentTime : 5.3033
+Vehicles route: 
+x: 0 y: 0
+x: 1.5 y: 1.5
+x: 2.83333 y: 0.166667
+x: 6 y: 1
+x: 5.16667 y: 4.83333
+SS visited 0 1 2 3 4 5 
+Vehicles route: 
+x: 0 y: 0
+x: 20 y: 3
+SS visited 6 
+Vehicles route: 
+x: 0 y: 0
+x: -21 y: -3
+SS visited 7 
