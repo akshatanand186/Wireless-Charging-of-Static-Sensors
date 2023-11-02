@@ -78,12 +78,15 @@ class Triangle{
         calculateCircumcenter();
     }  
     void printTriangle(){
+        if(debugvar)
         cout << "Vertex 1 ";
         p1.printPoint();
         cout << endl;
+        if(debugvar)
         cout << "Vertex 2 ";
         p2.printPoint();
         cout << endl;
+        if(debugvar)
         cout << "Vertex 3 ";
         p3.printPoint();
         cout << endl;
@@ -177,6 +180,8 @@ class WirelessChargingVehicle{
     }
     void printVehiclesRoutes(){
         if(debugvar) cout << "Vehicles route: \n";
+        if(debugvar) cout << "Number of points in journey \n";
+        cout << 1 + SLvisited.size() << endl;
         initialLocation.printPoint();
         cout << endl;
         for(auto t:SLvisited){
@@ -184,11 +189,56 @@ class WirelessChargingVehicle{
             cout << endl;
         }
         if(debugvar) cout << "SS visited ";
+        if(debugvar) cout << "Number of SS covered in journey \n";
+        cout << SSvisited.size() << endl;
         for(auto t:SSvisited) cout << t << " "; 
         cout << endl;
     }
 
 };
+
+void DelaunayTriangleswithSLs(vector<Triangle> answer,vector<Point> possibleSoujournLocations,vector<StaticSensor> listOfSS){
+    int x = debugvar;
+    debugvar = 0;
+    std::ofstream file1("./DelanuayTriangleWithSLs/DelaunayTriangle.txt");
+    
+    std::streambuf* original_stdout = std::cout.rdbuf(file1.rdbuf());
+
+    cout << answer.size() << endl;
+    for(auto t:answer) t.printTriangle();
+
+    cout << possibleSoujournLocations.size() << endl;
+    for(auto t:possibleSoujournLocations) {
+        t.printPoint();
+        cout << endl;
+    }
+    cout << listOfSS.size() << endl;
+    for(auto t:listOfSS){
+        t.P.printPoint();
+        cout << endl;
+    }
+    
+    std::cout.rdbuf(original_stdout);    
+    debugvar = x;
+}
+
+void WCVsPathsWithVehicles(Point BaseStation, vector<WirelessChargingVehicle> vehicles){
+    int x = debugvar;
+    debugvar = 0;
+    std::ofstream file1("./WCVsPathTracing/WCV.txt");
+    std::streambuf* original_stdout = std::cout.rdbuf(file1.rdbuf());
+
+    BaseStation.printPoint();
+    cout << endl;
+    cout << vehicles.size() << endl;
+    for(auto t:vehicles){
+        t.printVehiclesRoutes();
+    }
+
+
+    std::cout.rdbuf(original_stdout);    
+    debugvar = x;
+}
 
 int main(){
     freopen("input.txt","r",stdin);
@@ -218,6 +268,9 @@ int main(){
     for(auto t:answer){
         t.printTriangle();
     }
+    // freopen("./DelanuayTriangleWithSLs/output.txt","w",stdout);
+    // DelaunayTriangleswithSLs(answer);
+    // freopen("output.txt","w",stdout);
     sort(answer.begin(),answer.end(),cmp);
     // Sort the delanauy triangles according to their circumradius
     set<int> coveredPoints;
@@ -319,7 +372,7 @@ int main(){
         t.printPoint();
         cout << endl;
     }
-
+    DelaunayTriangleswithSLs(answer,possibleSoujournLocations,listOfSS);
 
     /*
     --Section of WCVs - parameters like coordinates of Base Station(same for all), constantofCharging, totalCharge
@@ -414,6 +467,8 @@ int main(){
     for(auto t:vehicles){
         t.printVehiclesRoutes();
     }
+
+    WCVsPathsWithVehicles(BaseStation,vehicles);
 
 
 }

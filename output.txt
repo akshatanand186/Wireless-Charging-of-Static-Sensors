@@ -126,17 +126,29 @@ currentTime : 5.05594
 currentTime : 5.05594  timeTakenToReachCurrentSL : 10.3592
 currentTime : 5.3033
 Vehicles route: 
+Number of points in journey 
+5
 x: 0 y: 0
 x: 1.5 y: 1.5
 x: 2.83333 y: 0.166667
 x: 6 y: 1
 x: 5.16667 y: 4.83333
-SS visited 0 1 2 3 4 5 
+SS visited Number of SS covered in journey 
+6
+0 1 2 3 4 5 
 Vehicles route: 
+Number of points in journey 
+2
 x: 0 y: 0
 x: 20 y: 3
-SS visited 6 
+SS visited Number of SS covered in journey 
+1
+6 
 Vehicles route: 
+Number of points in journey 
+2
 x: 0 y: 0
 x: -21 y: -3
-SS visited 7 
+SS visited Number of SS covered in journey 
+1
+7 
