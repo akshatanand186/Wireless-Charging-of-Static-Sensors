@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
+from datetime import datetime
 
 with open("DelanuayTriangleWithSLs\DelaunayTriangle.txt", "r") as file:
     lines = file.readlines()
@@ -49,7 +49,7 @@ base_x, base_y = base_station
 
 N = int(lines[1])
 
-plt.figure(figsize=(12, 6))
+fig = plt.figure(figsize=(12, 6))
 
 plt.plot(base_x, base_y, 'go', markersize=10, label="Base Station")
 
@@ -83,7 +83,7 @@ for _ in range(N):
 for triangle in triangles:
     triangle.append(triangle[0])  # Close the triangle by adding the first point to the end
     x, y = zip(*triangle)
-    plt.plot(x, y, 'c--', alpha=0.5)
+    plt.plot(x, y, 'c--', alpha = 0.3)
 
 x, y = zip(*SoujournLocations)
 plt.plot(x, y, 'g+',markersize=10,label="Soujourn Locations")
@@ -102,3 +102,7 @@ plt.legend()
 plt.grid(True)
 
 plt.show()
+
+now = datetime.now()
+dt_string = now.strftime("%d-%m-%Y_%H-%M-%S")
+fig.savefig('OutputImage/WCVTrace' + dt_string + '.png')
