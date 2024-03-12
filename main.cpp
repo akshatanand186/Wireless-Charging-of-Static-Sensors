@@ -200,7 +200,7 @@ class WirelessChargingVehicle{
 void DelaunayTriangleswithSLs(vector<Triangle> answer,vector<Point> possibleSoujournLocations,vector<StaticSensor> listOfSS){
     int x = debugvar;
     debugvar = 0;
-    std::ofstream file1("./DelanuayTriangleWithSLs/DelaunayTriangle.txt");
+    std::ofstream file1(".\\./DelanuayTriangleWithSLs/DelaunayTriangle.txt");
     
     std::streambuf* original_stdout = std::cout.rdbuf(file1.rdbuf());
 
@@ -225,7 +225,7 @@ void DelaunayTriangleswithSLs(vector<Triangle> answer,vector<Point> possibleSouj
 void WCVsPathsWithVehicles(Point BaseStation, vector<WirelessChargingVehicle> vehicles){
     int x = debugvar;
     debugvar = 0;
-    std::ofstream file1("./WCVsPathTracing/WCV.txt");
+    std::ofstream file1(".\\./WCVsPathTracing/WCV.txt");
     std::streambuf* original_stdout = std::cout.rdbuf(file1.rdbuf());
 
     BaseStation.printPoint();
@@ -240,9 +240,28 @@ void WCVsPathsWithVehicles(Point BaseStation, vector<WirelessChargingVehicle> ve
     debugvar = x;
 }
 
+void statisticalAnalysis(int staticSensorsCount,double chargingRange, int possibleSoujournLocationsCount,bool isPossibleToCover,double maxDeadline,int numberOfWCVsrequired, double distanceTravelledbyWCV){
+    int x = debugvar;
+    debugvar = 0;
+    std::ofstream file1(".\\./Statistics/stats.txt");
+    std::streambuf* original_stdout = std::cout.rdbuf(file1.rdbuf());
+
+    cout << staticSensorsCount << endl;
+    cout << chargingRange << endl;
+    cout << possibleSoujournLocationsCount << endl;
+    cout << isPossibleToCover << endl;
+    cout << maxDeadline << endl;
+    cout << numberOfWCVsrequired << endl;
+    cout << distanceTravelledbyWCV << endl;
+
+    std::cout.rdbuf(original_stdout);    
+    debugvar = x;
+}
+
 int main(){
-    freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
+    freopen(".\\input4.txt","r",stdin);
+    // freopen("input4.txt","r",stdin);
+    freopen(".\\output.txt","w",stdout);
     // cout << fixed << setprecision(5);
     // debugvar = 0;
     int staticSensorsCount; 
@@ -417,9 +436,13 @@ int main(){
 
     double currentTime = 0;
     Point LastLocation = BaseStation;
-    bool notPossible = 0;
+    bool isPossibleToCover = true;
+    double totalDistanceTravelledbyWCV = 0;
+    double maxDeadline = 0;
     for(auto t:weightedPossibleSLS){
         double timeTakenToReachCurrentSL = distance(LastLocation,t.coordinate)/speedOfWCV;
+        totalDistanceTravelledbyWCV += distance(LastLocation,t.coordinate);
+
         debug2(currentTime,timeTakenToReachCurrentSL);
         vector<int> NotReachable;
         bool flag = 0;
@@ -430,6 +453,7 @@ int main(){
             }
             else{
                 // debug3(deadline,currentTime,timeTakenToReachCurrentSL);
+                maxDeadline = max(maxDeadline,currentTime+timeTakenToReachCurrentSL);
                 currentWCVVehicle.SSvisited.push_back(id);
                 flag = 1;
             }
@@ -444,8 +468,9 @@ int main(){
             for(int id:NotReachable){
                 double deadline = listOfSS[id].deadline;
                 if(deadline<timeTakenToReachThisSL){
-                    notPossible = 1;
+                    isPossibleToCover = false;
                     cout << "NOT POSSIBLE\n";
+                    statisticalAnalysis(staticSensorsCount,chargingRange,possibleSoujournLocations.size(),isPossibleToCover,maxDeadline,vehicles.size(),totalDistanceTravelledbyWCV);
                     return 0;
                 }
                 else{
@@ -469,6 +494,8 @@ int main(){
     }
 
     WCVsPathsWithVehicles(BaseStation,vehicles);
+    
+    statisticalAnalysis(staticSensorsCount,chargingRange,possibleSoujournLocations.size(),isPossibleToCover,maxDeadline,vehicles.size(),totalDistanceTravelledbyWCV);
 
 
 }

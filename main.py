@@ -57,7 +57,7 @@ all_x_points, all_y_points = [], []
 
 line_number = 2
 i = 0
-path_colors = ['b-', 'm-', 'y-', 'k-']
+path_colors = ['b-', 'm-', 'y-', 'r-']
 for _ in range(N):
 
     M = int(lines[line_number])
@@ -92,8 +92,8 @@ x, y = zip(*StaticSensors)
 plt.plot(x, y, 'ro',markersize=3,label="Static Sensors")
 
 # Determine the axis limits based on all visited SoujournLocations
-plt.xlim(-25, 25)
-plt.ylim(-5, 10)
+plt.xlim(-25, 250)
+plt.ylim(-20, 200)
 
 plt.xlabel("X")
 plt.ylabel("Y")
