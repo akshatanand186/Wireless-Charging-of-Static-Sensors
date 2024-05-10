@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime
 
-with open("DelanuayTriangleWithSLs\DelaunayTriangle.txt", "r") as file:
+with open("DelanuayTriangleWithSLs/DelaunayTriangle.txt", "r") as file:
     lines = file.readlines()
 
 n = int(lines[0])
@@ -40,7 +40,7 @@ for _ in range(x):
 
 
 
-with open("WCVsPathTracing\WCV.txt", "r") as file:
+with open("WCVsPathTracing/WCV.txt", "r") as file:
     lines = file.readlines()
 
 
@@ -92,8 +92,11 @@ x, y = zip(*StaticSensors)
 plt.plot(x, y, 'ro',markersize=3,label="Static Sensors")
 
 # Determine the axis limits based on all visited SoujournLocations
-plt.xlim(-25, 250)
-plt.ylim(-20, 200)
+# plt.xlim(-25, 250)
+# plt.ylim(-20, 200)
+
+plt.xlim(-25, 25)
+plt.ylim(-25, 25)
 
 plt.xlabel("X")
 plt.ylabel("Y")

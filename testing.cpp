@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
-#include <bits/stdc++.h>
 #include <unistd.h>
 
 using namespace std;
@@ -80,13 +79,14 @@ vector<float> staticSensorsCharacteristics(){
 }
 
 void generateInput(int staticSensorsCount, double chargingRange) {
-    std::ofstream inputFile(".\\input4.txt");
+    std::ofstream inputFile("./input4.txt");
     if (!inputFile.is_open()) {
         std::cerr << "Error opening input.txt for writing." << std::endl;
         exit(EXIT_FAILURE);
     }
     inputFile << staticSensorsCount << " " << chargingRange << endl;
-    vector<pair<int,int>> staticSensorsLocations = generateStaticSensors(staticSensorsCount,100,100);
+    vector<pair<int,int>> staticSensorsLocations = generateStaticSensors(staticSensorsCount,1000,1000);
+    // generateStaticSensors (1000,1000) - maxX maxY
 
     for(auto t:staticSensorsLocations){
         vector<float> sensor = staticSensorsCharacteristics();
@@ -94,12 +94,14 @@ void generateInput(int staticSensorsCount, double chargingRange) {
         for(auto x:sensor) inputFile << x << " ";
         inputFile << "\n";
     }
-    inputFile << "150 5 5\n50 50\n";
+    // Speed of WCV, constant of Charging, Total Charge available on WCV.
+    // Base Station Location 
+    inputFile << "1500 5 800\n500 500\n";
     inputFile.close();
 }
 
 void writeStatistics(vector<statistics> stats, double chargingRange) {
-    std::ofstream inputFile(".\\./Statistics/finalstats_v1.txt");
+    std::ofstream inputFile("./Statistics/finalstats_v1.txt");
     if (!inputFile.is_open()) {
         std::cerr << "Error opening input.txt for writing." << std::endl;
         exit(EXIT_FAILURE);
@@ -119,8 +121,10 @@ void writeStatistics(vector<statistics> stats, double chargingRange) {
 
     inputFile.close();
 }
+
+
 void writeStatisticsForConstantStaticSensors(vector<statistics> stats, int numberOfSensors) {
-    std::ofstream inputFile(".\\./Statistics/finalstats_v2.txt");
+    std::ofstream inputFile("./Statistics/finalstats_v2.txt");
     if (!inputFile.is_open()) {
         std::cerr << "Error opening input.txt for writing." << std::endl;
         exit(EXIT_FAILURE);
@@ -151,13 +155,15 @@ void runCode(const std::string& codeFile, const std::string& outputFile) {
 void constantGamma(){
     // vector<int> testCases = {100,300,600,900,1200,1500,1800,2000};
     vector<int> testCases = {30,50,100,200,250,300,350,400,450,500};
+    // vector<int> testCases = {30,50,100,200,250,300};
     // vector<int> testCases = {30};
     vector<statistics> stats;
-    double chargingRange = 5;
+    double chargingRange = 25;
     for(auto t:testCases){
         generateInput(t,chargingRange);
-        runCode("main", "correctoutput.txt");
-        std::ifstream input(".\\./Statistics/stats.txt");
+        // runCode("main", "correctoutput.txt");
+        system("./main ");
+        std::ifstream input("./Statistics/stats.txt");
         statistics s1;
         input >> s1.staticSensorsCount;
         input >> s1.chargingRange;
@@ -172,7 +178,7 @@ void constantGamma(){
 }
 
 void generateInputForConstantStaticSensors(double chargingRange, int numberOfSensors,vector<pair<int,int>> staticSensorsLocations ,vector<vector<float>> sensorsCharacteristics) {
-    std::ofstream inputFile(".\\input4.txt");
+    std::ofstream inputFile("./input4.txt");
     if (!inputFile.is_open()) {
         std::cerr << "Error opening input.txt for writing." << std::endl;
         exit(EXIT_FAILURE);
@@ -188,16 +194,17 @@ void generateInputForConstantStaticSensors(double chargingRange, int numberOfSen
         inputFile << "\n";
     }
 
-
-    inputFile << "100 5 5\n50 50\n";
+    // Speed of WCV, constant of Charging, Total Charge available on WCV.
+    // Base Station Location
+    inputFile << "500 5 500\n500 500\n";
     inputFile.close();
 }
 
 
 void constantStaticSensors(){
-    vector<double> testCases = {5,6,8,10,12,14,16,18,20};
-    int numberOfSensors = 100;
-    vector<pair<int,int>> staticSensorsLocations = generateStaticSensors(numberOfSensors,100,100);
+    vector<double> testCases = {5.0,6.0,8.0,10.0,12.0,14.0,16.0,18.0,20.0};
+    int numberOfSensors = 250;
+    vector<pair<int,int>> staticSensorsLocations = generateStaticSensors(numberOfSensors,1000,1000);
     vector<vector<float>> sensorsCharacteristics;
     for(auto t:staticSensorsLocations){
         vector<float> sensor = staticSensorsCharacteristics();
@@ -206,8 +213,9 @@ void constantStaticSensors(){
     vector<statistics> stats;
     for(auto t:testCases){
         generateInputForConstantStaticSensors(t,numberOfSensors, staticSensorsLocations,sensorsCharacteristics);
-        runCode("main", "correctoutput.txt");
-        std::ifstream input(".\\./Statistics/stats.txt");
+        // runCode("main", "correctoutput.txt");
+        system("./main ");
+        std::ifstream input("./Statistics/stats.txt");
         statistics s1;
         input >> s1.staticSensorsCount;
         input >> s1.chargingRange;
@@ -225,17 +233,17 @@ void constantStaticSensors(){
 
 int main(){
     srand(time(0)); 
-    const char* compileCommand1 = "g++ main.cpp -o main";
-    int result1 = system(compileCommand1);
+    // const char* compileCommand1 = "g++ main.cpp -o main";
+    // int result1 = system(compileCommand1);
 
-    if (result1 == 0) {
-        std::cout << "Compilation successful!" << std::endl;
-    } else {
-        std::cerr << "Compilation failed." << std::endl;
-    }
+    // if (result1 == 0) {
+    //     std::cout << "Compilation successful!" << std::endl;
+    // } else {
+    //     std::cerr << "Compilation failed." << std::endl;
+    // }
     
     
-    // constantGamma();
-    constantStaticSensors();
+    constantGamma();
+    // constantStaticSensors();
   
 }

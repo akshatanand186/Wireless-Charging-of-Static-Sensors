@@ -1,4 +1,6 @@
 *.exe
 .venv
+/venv
 /OutputImage
 *.pdf
+*.png

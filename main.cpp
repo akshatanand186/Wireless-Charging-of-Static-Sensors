@@ -200,7 +200,7 @@ class WirelessChargingVehicle{
 void DelaunayTriangleswithSLs(vector<Triangle> answer,vector<Point> possibleSoujournLocations,vector<StaticSensor> listOfSS){
     int x = debugvar;
     debugvar = 0;
-    std::ofstream file1(".\\./DelanuayTriangleWithSLs/DelaunayTriangle.txt");
+    std::ofstream file1("./DelanuayTriangleWithSLs/DelaunayTriangle.txt");
     
     std::streambuf* original_stdout = std::cout.rdbuf(file1.rdbuf());
 
@@ -225,7 +225,7 @@ void DelaunayTriangleswithSLs(vector<Triangle> answer,vector<Point> possibleSouj
 void WCVsPathsWithVehicles(Point BaseStation, vector<WirelessChargingVehicle> vehicles){
     int x = debugvar;
     debugvar = 0;
-    std::ofstream file1(".\\./WCVsPathTracing/WCV.txt");
+    std::ofstream file1("./WCVsPathTracing/WCV.txt");
     std::streambuf* original_stdout = std::cout.rdbuf(file1.rdbuf());
 
     BaseStation.printPoint();
@@ -243,7 +243,7 @@ void WCVsPathsWithVehicles(Point BaseStation, vector<WirelessChargingVehicle> ve
 void statisticalAnalysis(int staticSensorsCount,double chargingRange, int possibleSoujournLocationsCount,bool isPossibleToCover,double maxDeadline,int numberOfWCVsrequired, double distanceTravelledbyWCV){
     int x = debugvar;
     debugvar = 0;
-    std::ofstream file1(".\\./Statistics/stats.txt");
+    std::ofstream file1("./Statistics/stats.txt");
     std::streambuf* original_stdout = std::cout.rdbuf(file1.rdbuf());
 
     cout << staticSensorsCount << endl;
@@ -259,9 +259,9 @@ void statisticalAnalysis(int staticSensorsCount,double chargingRange, int possib
 }
 
 int main(){
-    freopen(".\\input4.txt","r",stdin);
+    freopen("./input4.txt","r",stdin);
     // freopen("input4.txt","r",stdin);
-    freopen(".\\output.txt","w",stdout);
+    freopen("./output.txt","w",stdout);
     // cout << fixed << setprecision(5);
     // debugvar = 0;
     int staticSensorsCount; 
@@ -439,6 +439,9 @@ int main(){
     bool isPossibleToCover = true;
     double totalDistanceTravelledbyWCV = 0;
     double maxDeadline = 0;
+
+    double currentUsedCharge = 0;
+
     for(auto t:weightedPossibleSLS){
         double timeTakenToReachCurrentSL = distance(LastLocation,t.coordinate)/speedOfWCV;
         totalDistanceTravelledbyWCV += distance(LastLocation,t.coordinate);
@@ -448,13 +451,15 @@ int main(){
         bool flag = 0;
         for(int id:t.SLs){
             double deadline = listOfSS[id].deadline;
-            if(deadline<currentTime+timeTakenToReachCurrentSL){
+            double chargeForThisSL = (1-listOfSS[id].state_of_charge)*listOfSS[id].battery_capacity;
+            if(deadline<currentTime+timeTakenToReachCurrentSL || currentUsedCharge + chargeForThisSL > currentWCVVehicle.totalCharge){
                 NotReachable.push_back(id); 
             }
             else{
                 // debug3(deadline,currentTime,timeTakenToReachCurrentSL);
                 maxDeadline = max(maxDeadline,currentTime+timeTakenToReachCurrentSL);
                 currentWCVVehicle.SSvisited.push_back(id);
+                currentUsedCharge += chargeForThisSL;
                 flag = 1;
             }
         }
@@ -462,19 +467,33 @@ int main(){
             currentWCVVehicle.SLvisited.push_back(t.coordinate);
         }
         if(!NotReachable.empty()){ // Make a New WCV directly reaching from Base Station 
+            currentWCVVehicle.SLvisited.push_back(BaseStation);
             vehicles.push_back(currentWCVVehicle);
             currentWCVVehicle = WirelessChargingVehicle(speedOfWCV,chargingRange,constantofCharging,totalCharge,BaseStation);
             double timeTakenToReachThisSL = distance(BaseStation,t.coordinate)/speedOfWCV;
+            currentUsedCharge = 0;
             for(int id:NotReachable){
                 double deadline = listOfSS[id].deadline;
-                if(deadline<timeTakenToReachThisSL){
+                double chargeForThisSL = (1-listOfSS[id].state_of_charge)*listOfSS[id].battery_capacity;
+                if(deadline<timeTakenToReachThisSL || chargeForThisSL > currentWCVVehicle.totalCharge){
                     isPossibleToCover = false;
+                    debug3(id,chargeForThisSL,currentWCVVehicle.totalCharge);
+                    debug2(deadline,timeTakenToReachThisSL);
                     cout << "NOT POSSIBLE\n";
                     statisticalAnalysis(staticSensorsCount,chargingRange,possibleSoujournLocations.size(),isPossibleToCover,maxDeadline,vehicles.size(),totalDistanceTravelledbyWCV);
                     return 0;
                 }
                 else{
-                    currentWCVVehicle.SSvisited.push_back(id);
+                    if(currentUsedCharge+chargeForThisSL <= currentWCVVehicle.totalCharge){
+                        currentWCVVehicle.SSvisited.push_back(id);
+                        currentUsedCharge += chargeForThisSL;
+                    }
+                    else{
+                        currentWCVVehicle.SLvisited.push_back(BaseStation);
+                        vehicles.push_back(currentWCVVehicle);
+                        currentWCVVehicle = WirelessChargingVehicle(speedOfWCV,chargingRange,constantofCharging,totalCharge,BaseStation);
+                        currentUsedCharge = chargeForThisSL;
+                    }
                 }
             }
             currentWCVVehicle.SLvisited.push_back(t.coordinate);
@@ -488,6 +507,7 @@ int main(){
         debug(currentTime);
         cout << endl;
     }
+    currentWCVVehicle.SLvisited.push_back(BaseStation);
     vehicles.push_back(currentWCVVehicle);
     for(auto t:vehicles){
         t.printVehiclesRoutes();
